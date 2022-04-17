@@ -1,0 +1,11 @@
+.popup__preview-close-button {
+  top: -23px;
+  right: 0px;
+}
+
+@media screen and (max-width: 768px) {
+  .popup__preview-close-button {
+    top: -18px;
+    right: 40px;
+  }
+}

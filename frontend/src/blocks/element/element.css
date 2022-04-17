@@ -1,0 +1,16 @@
+.element {
+  position: relative;
+  width: 100%;
+  max-width: 282px;
+
+  justify-self: center;
+
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: baseline;
+  margin: 0;
+
+  background: #ffffff;
+  border-radius: 10px;
+}

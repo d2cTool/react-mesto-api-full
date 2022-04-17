@@ -1,0 +1,31 @@
+.login__input {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 358px;
+  margin-top: 30px;
+  display: block;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid #cccccc;
+  padding-bottom: 7px;
+  font-family: Inter, "Arial", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 17px;
+  color: #ffffff !important;
+  background-color: #000000 !important;
+}
+
+.login__input:focus {
+  outline: none;
+}
+
+/* input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+} */

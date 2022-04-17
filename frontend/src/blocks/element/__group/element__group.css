@@ -1,0 +1,11 @@
+.element__group {
+    width: 100%;
+    padding: 25px 20px 23px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    box-sizing: border-box;
+}
