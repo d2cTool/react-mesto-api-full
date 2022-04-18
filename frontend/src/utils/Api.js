@@ -1,30 +1,30 @@
 import { apiUrl } from "./const";
 
 class Api {
-  constructor({ baseUrl, headers }) {
+  constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
-    this._headers = headers;
-    this._token = headers.authorization;
   }
 
   getInitialCards() {
-    return this._fetchRequest(`/cards`, { headers: this._headers });
+    return this._request({
+      endPoint: 'cards',
+      method: 'GET'
+    });
   }
 
   postCard(name, link) {
-    return this._fetchRequest(`/cards`, {
-      headers: this._headers,
-      method: "POST",
-      body: JSON.stringify({
+    return this._request({
+      endPoint: 'cards',
+      body: {
         name: name,
         link: link,
-      }),
+      },
     });
   }
 
   deleteCard(id) {
-    return this._fetchRequest(`/cards/${id}`, {
-      headers: this._headers,
+    return this._request({
+      endPoint: `cards/${id}`,
       method: "DELETE",
     });
   }
@@ -34,60 +34,65 @@ class Api {
   }
 
   addLike(id) {
-    return this._fetchRequest(`/cards/${id}/likes`, {
-      headers: this._headers,
+    return this._request({
+      endPoint: `cards/${id}/likes`,
       method: "PUT",
     });
   }
 
   removeLike(id) {
-    return this._fetchRequest(`/cards/${id}/likes`, {
-      headers: this._headers,
+    return this._request({
+      endPoint: `cards/${id}/likes`,
       method: "DELETE",
     });
   }
 
   getUserInfo() {
-    return this._fetchRequest(`/users/me`, {
-      headers: this._headers,
+    return this._request({
+      endPoint: `users/me`,
+      method: "GET",
     });
   }
 
   patchUserInfo(name, about) {
-    return this._fetchRequest(`/users/me`, {
-      headers: this._headers,
+    return this._request({
+      endPoint: `users/me`,
       method: "PATCH",
-      body: JSON.stringify({
+      body: {
         name: name,
         about: about,
-      }),
+      },
     });
   }
 
   patchUserAvatar(avatar) {
-    return this._fetchRequest(`/users/me/avatar`, {
-      headers: this._headers,
+    return this._request({
+      endPoint: `users/me/avatar`,
       method: "PATCH",
-      body: JSON.stringify({
+      body: {
         avatar: avatar,
-      }),
+      },
     });
   }
 
-  _fetchRequest(url, options) {
-    return fetch(`${this._baseUrl}${url}`, options).then((res) => {
+  _request({ endPoint, method = "POST", body }) {
+    const token = localStorage.getItem('token');
+    const config = {
+      method,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        ...(!!token && { Authorization: `Bearer ${token}` }),
+      },
+      ...(!!body && { body: JSON.stringify(body) }),
+    };
+    return fetch(`${apiUrl}/${endPoint}`, config).then((res) => {
       if (res.ok) {
         return res.json();
       }
       return Promise.reject(res.status);
     });
-  }
+  };
 }
 
-export const api = new Api({
-  baseUrl: apiUrl,
-  headers: {
-    authorization: `Bearer ${localStorage.getItem('token')}`,
-    "Content-Type": "application/json",
-  },
-});
+export const api = new Api({ baseUrl: apiUrl });
