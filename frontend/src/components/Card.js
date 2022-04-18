@@ -4,8 +4,8 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 function Card({ card, onCardPreview, onCardLike, onCardDelete }) {
   const currentUser = useContext(CurrentUserContext);
 
-  const isOwn = card.owner._id === currentUser._id;
-  const canLike = card.likes.some((like) => like._id === currentUser._id);
+  const isOwn = card.owner === currentUser._id;
+  const isLiked = card.likes.length > 0 && card.likes.some((like) => like === currentUser._id);
 
   function handleLikeClick() {
     onCardLike(card);
@@ -42,7 +42,7 @@ function Card({ card, onCardPreview, onCardLike, onCardDelete }) {
             aria-label="like"
             className={
               "element__like-button " +
-              (canLike && "element__like-button_active")
+              (isLiked && "element__like-button_active")
             }
             onClick={handleLikeClick}
           ></button>

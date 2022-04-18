@@ -11,7 +11,7 @@ const createCard = (req, res, next) => {
   Card.create({
     name, link, owner: req.user._id,
   })
-    .then((card) => res.send({ data: card }))
+    .then((card) => res.send(card))
     .catch((err) => next(err));
 };
 
@@ -23,7 +23,7 @@ const deleteCard = (req, res, next) => {
       if (!card.owner.equals(userId)) {
         next(new ForbiddenError("You cannot delete someone else's card"));
       } else {
-        card.remove().then(() => res.send({ data: card }));
+        card.remove().then(() => res.send(card));
       }
     })
     .catch((err) => next(err));
@@ -36,7 +36,7 @@ const likeCard = (req, res, next) => {
     { new: true },
   )
     .orFail(() => new NotFoundError('Card is not found'))
-    .then((likes) => res.send({ data: likes }))
+    .then((card) => res.send(card))
     .catch((err) => next(err));
 };
 
@@ -47,7 +47,7 @@ const dislikeCard = (req, res, next) => {
     { new: true },
   )
     .orFail(() => new NotFoundError('Card is not found'))
-    .then((likes) => res.send({ data: likes }))
+    .then((card) => res.send(card))
     .catch((err) => next(err));
 };
 

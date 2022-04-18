@@ -1,3 +1,5 @@
+import { apiUrl } from "./const";
+
 class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -83,9 +85,9 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-33",
+  baseUrl: apiUrl,
   headers: {
-    authorization: "20f1beb6-6801-4a67-a1e2-4a17380dc299",
+    authorization: `Bearer ${localStorage.getItem('token')}`,
     "Content-Type": "application/json",
   },
 });

@@ -42,7 +42,7 @@ const createUser = (req, res, next) => {
 
 const getUserById = (req, res, next) => User.findById(req.params.userId)
   .orFail(() => new NotFoundError('User is not found'))
-  .then((user) => res.send({ data: user }))
+  .then((user) => res.send(user))
   .catch((err) => next(err));
 
 const updateUser = (req, res, next) => {
@@ -55,7 +55,7 @@ const updateUser = (req, res, next) => {
     },
   )
     .orFail(() => new NotFoundError('User is not found'))
-    .then((usr) => res.send({ data: usr }))
+    .then((usr) => res.send(usr))
     .catch((err) => next(err));
 };
 
@@ -69,7 +69,7 @@ const updateAvatar = (req, res, next) => {
     },
   )
     .orFail(() => new NotFoundError('User is not found'))
-    .then((usr) => res.send({ data: usr }))
+    .then((usr) => res.send(usr))
     .catch((err) => next(err));
 };
 

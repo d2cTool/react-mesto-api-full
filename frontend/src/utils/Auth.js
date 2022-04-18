@@ -1,4 +1,4 @@
-export const baseUrl = "https://auth.nomoreparties.co";
+import { apiUrl } from "./const";
 
 const request = ({ endPoint, method = "POST", token, body }) => {
   const config = {
@@ -10,7 +10,7 @@ const request = ({ endPoint, method = "POST", token, body }) => {
     },
     ...(!!body && { body: JSON.stringify(body) }),
   };
-  return fetch(`${baseUrl}/${endPoint}`, config).then((res) => {
+  return fetch(`${apiUrl}/${endPoint}`, config).then((res) => {
     if (res.ok) {
       return res.json();
     }
