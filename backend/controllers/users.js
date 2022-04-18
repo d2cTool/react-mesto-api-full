@@ -4,7 +4,7 @@ const ConflictError = require('../errors/conflictError');
 const UnauthorizedError = require('../errors/unauthorizedError');
 const User = require('../models/user');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+const { JWT_SECRET = 'top secret' } = process.env;
 
 const getUsers = (req, res, next) => User.find({})
   .then((users) => res.send(users))
@@ -77,8 +77,13 @@ const login = (req, res, next) => {
   const { email, password } = req.body;
   User.findUser(email, password)
     .then((usr) => {
-      const secret = NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key';
-      const token = jwt.sign({ _id: usr._id }, secret, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: usr._id }, JWT_SECRET, { expiresIn: '7d' });
+      // res.cookie('jwt', token, {
+      //   maxAge: 24 * 3600 * 1000, // hours
+      //   httpOnly: true,
+      //   sameSite: true,
+      // });
+      // res.send({ message: `User with email ${email} authorized` });
       res.send({ token });
     })
     .catch((err) => next(new UnauthorizedError(err.message)));
