@@ -55,6 +55,20 @@ function App() {
     tokenCheck();
   }, []);
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      api
+        .getUserInfo()
+        .then((data) => setCurrentUser(data))
+        .catch((err) => console.log(err));
+    }
+    
+    api
+      .getInitialCards()
+      .then((data) => setCards(data))
+      .catch((err) => console.log(err));
+  }, [isLoggedIn]);
+
   function handleCardLike(card) {
     const isLiked = card.likes.length > 0 && card.likes.some((i) => i === currentUser._id);
 
@@ -138,7 +152,7 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleRegister({password, email}) {
+  function handleRegister({ password, email }) {
     auth
       .register(email, password)
       .then(() => {

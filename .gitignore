@@ -1,13 +1,5 @@
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
 # production
-/build
+build
 
 # misc
 .DS_Store
@@ -38,3 +30,4 @@ node_modules
 
 #Own
 *.http
+.env
